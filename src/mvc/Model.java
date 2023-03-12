@@ -5,9 +5,9 @@ abstract public class Model extends Bean {
 	private boolean unsavedChanges = false;
 	private String fileName = null;
 	
-	void changed() {
+	protected void changed() {
 		unsavedChanges = true;
-		// TODO: property change event
+		// TODO: firePropertyChange
 	}
 
 	public boolean getUnsavedChanges() {
