@@ -13,9 +13,17 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 	Model model;
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent ae) {
+		try {
+			
+		} catch (Exception e) {
+			handleException(e);
+		}
 		
+	}
+	
+	protected void handleException(Exception e) {
+		Utilities.error(e);
 	}
 
 	@Override

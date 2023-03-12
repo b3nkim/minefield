@@ -1,25 +1,30 @@
 package mvc;
 
-public class Model extends Bean {
+abstract public class Model extends Bean {
 
-	boolean unsavedChanges = false;
-	String fileName = null;
+	private boolean unsavedChanges = false;
+	private String fileName = null;
 	
+	void changed() {
+		unsavedChanges = true;
+		// TODO: property change event
+	}
+
 	public boolean getUnsavedChanges() {
 		return unsavedChanges;
 	}
-	
+
 	public void setUnsavedChanges(boolean unsavedChanges) {
 		this.unsavedChanges = unsavedChanges;
 	}
-	
+
 	public String getFileName() {
 		return fileName;
 	}
+
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-
-
+	
 }
 

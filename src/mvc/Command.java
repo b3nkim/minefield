@@ -1,5 +1,5 @@
 package mvc;
 
-public class Command {
-
+abstract public class Command {
+	abstract public void execute() throws Exception;
 }
