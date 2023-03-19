@@ -13,7 +13,10 @@ public class MoveCommand extends Command {
 
 	@Override
 	public void execute() throws Exception {
-		// TODO Auto-generated method stub
+		if (!(model instanceof MineField)) {
+			throw new Exception("Model must instantiate MineField");
+		}
+		MineField minefield = (MineField)model;
 		
 	}
 
