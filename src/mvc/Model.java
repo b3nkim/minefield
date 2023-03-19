@@ -6,8 +6,7 @@ abstract public class Model extends Bean {
 	private String fileName = null;
 	
 	protected void changed() {
-		unsavedChanges = true;
-		// TODO: firePropertyChange
+		setUnsavedChanges(true);
 	}
 
 	public boolean getUnsavedChanges() {
@@ -25,9 +24,7 @@ abstract public class Model extends Bean {
 	}
 
 	public void setFileName(String fileName) {
-		String oldFileName = this.fileName;
 		this.fileName = fileName;
-		firePropertyChange("fileName", oldFileName, fileName);
 	}
 	
 }
