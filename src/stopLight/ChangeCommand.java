@@ -8,9 +8,18 @@ public class ChangeCommand extends Command {
 		super(model);
 	}
 
-	public void execute() {
+	@Override
+	public void execute() throws Exception {	
+		if (!(model instanceof Stoplight)) {
+			throw new Exception("Model must instantiate Stoplight");
+		}
 		Stoplight light = (Stoplight)model;
 		light.change();
 	}
+
+//	@Override
+//	public void undo() {
+//		
+//	}
 
 }

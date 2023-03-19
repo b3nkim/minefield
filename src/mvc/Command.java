@@ -5,8 +5,9 @@ abstract public class Command {
 	protected Model model;
 	
 	public Command(Model model) {
-		// TODO Auto-generated constructor stub
+		this.model = model;
 	}
 
 	abstract public void execute() throws Exception;
+//	abstract public void undo();
 }
