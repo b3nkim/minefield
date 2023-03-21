@@ -17,6 +17,7 @@ abstract public class Model extends Bean {
 		boolean flag = this.unsavedChanges;
 		this.unsavedChanges = unsavedChanges;
 		firePropertyChange("unsavedChanges", flag, unsavedChanges);
+		this.unsavedChanges = false;
 	}
 
 	public String getFileName() {

@@ -10,10 +10,6 @@ class Cell extends JLabel {
 	Patch patch;
 }
 
-class Patch {
-
-}
-
 public class MineFieldView extends View {
 
 	private Cell cells[][];

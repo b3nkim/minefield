@@ -1,5 +1,6 @@
 package mvc;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,10 @@ import javax.swing.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class AppPanel extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -17,25 +22,31 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 	protected View view;
 	protected JPanel controlPanel; // not a separate class!
 	private SafeFrame frame;
+	private Container cp;
 	public static int FRAME_WIDTH = 500;
 	public static int FRAME_HEIGHT = 300;
 
 	public AppPanel(AppFactory factory) {
 		super();
-		// TODO Auto-generated constructor stub
 		this.factory = factory;
-		this.model = factory.makeModel();
-		this.view = factory.makeView(model);
-		this.controlPanel = new JPanel(); // TODO
-		SafeFrame frame = new SafeFrame();
-		Container cp = frame.getContentPane();
+		
+		model = factory.makeModel();
+		view = factory.makeView(model);
+		controlPanel = new JPanel(); // TODO
+		
+		view.setBackground(Color.LIGHT_GRAY);
+		controlPanel.setBackground(Color.PINK);
+
+		frame = new SafeFrame();
+		cp = frame.getContentPane();
 		cp.add(this);
 		frame.setJMenuBar(this.createMenuBar());
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		frame.setTitle(factory.getTitle());
-		//		this.setLayout((new GridLayout(1, 2)));
-		//		this.add(controls);
-		//		this.add(canvas);
+		
+		this.setLayout((new GridLayout(1, 2)));
+		this.add(controlPanel);
+		this.add(view);
 
 		display();
 	}
@@ -46,8 +57,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
-
+		/* override in extensions if needed */
 	}
 
 	public Model getModel() {
@@ -66,9 +76,9 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 
 	protected JMenuBar createMenuBar() {
 		JMenuBar result = new JMenuBar();
-
-		JMenu fileMenu = Utilities.makeMenu("File", 
-				new String[]{"New", "Save", "SaveAs", "Open", "Quit"}, this);
+		
+		String[] fileItems = {"New", "Save", "SaveAs", "Open", "Quit"};
+		JMenu fileMenu = Utilities.makeMenu("File", fileItems, this);
 		result.add(fileMenu);
 
 		String[] editCommands = factory.getEditCommands();
@@ -87,7 +97,42 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 		String actionCommand = ae.getActionCommand();
 		try {
 			switch (actionCommand) {
-			
+				case "New": {
+					if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
+						model = factory.makeModel();
+						view.setModel(model);
+					}
+					break;
+				}
+				case "Save": {
+					String fName = Utilities.getFileName((String) null, false);
+					ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fName));
+					os.writeObject(this.model);
+					os.close();
+					break;
+				}
+				case "SaveAs": {
+					String fName = Utilities.getFileName((String) null, true);
+					ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fName));
+					os.writeObject(this.model);
+					os.close();
+					break;
+				}
+				case "Open": {
+					if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
+						String fName = Utilities.getFileName((String) null, true);
+						ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
+						this.model = (Model) is.readObject();
+						this.view.setModel(model);
+						is.close();
+					}
+					break;
+				}
+				case "Quit": {
+					if (Utilities.confirm("Are you sure? Unsaved changes will be lost!"))
+						System.exit(0);
+					break;
+				}
 				case "About": {
 					Utilities.inform(factory.about());
 				}
@@ -95,8 +140,10 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 					Utilities.inform(factory.getHelp());
 					break;
 				}
-				default: {
-					throw new Exception("Unrecognized command: " + actionCommand);
+				default: {					
+					Command command = factory.makeEditCommand(model, actionCommand, ae.getSource());
+					command.execute();
+//					throw new Exception("Unrecognized command: " + actionCommand);
 				}
 			}
 
