@@ -6,18 +6,18 @@ public class MoveCommand extends Command {
 	
 	Heading heading;
 	
-	public MoveCommand(Model model) {
+	public MoveCommand(Model model, Heading heading) {
 		super(model);
-		// TODO Auto-generated constructor stub
+		this.heading = heading;
 	}
-
+	
 	@Override
 	public void execute() throws Exception {
 		if (!(model instanceof MineField)) {
 			throw new Exception("Model must instantiate MineField");
 		}
 		MineField minefield = (MineField)model;
-		
+		minefield.updateLocation(heading);
 	}
 
 }

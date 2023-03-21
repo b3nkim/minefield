@@ -16,32 +16,50 @@ public class MineFieldView extends View {
 	public MineFieldView(MineField m) {
 		super(m);
 		int dim = m.getDim();
+		Patch[][] patches = m.getPatches();
 		cells = new Cell[dim][dim];
 		setLayout(new GridLayout(dim, dim));
 		for(int row = 0; row < dim; row++) {
 			for (int col = 0; col < dim; col++) {
-
-				// create and injitialize cells here, use
-				cells[row][col].setBorder(BorderFactory.createLineBorder(Color.black));
-
+				Cell cell = new Cell();
+				cell.patch = patches[row][col];
+				cell.setOpaque(true);
+				cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				cell.setBackground(Color.LIGHT_GRAY);
+				cell.setText("" + cell.patch.neighbors);
+				cell.setHorizontalAlignment(JLabel.CENTER);
+			    cell.setVerticalAlignment(JLabel.CENTER);
+			    cells[row][col] = cell;
+				this.add(cells[row][col]);
 			}
 		}
+		repaint();
 	}
 
 	public void paintComponent(Graphics gc) {
 		super.paintComponent(gc);
-//		Color oldColor = gc.getColor();
-//		Stoplight light = (Stoplight)model;
-//		StoplightShape shape = new StoplightShape(light);
-//		shape.draw((Graphics2D) gc);
-//		gc.setColor(oldColor);
-		MineField minefield = (MineField)model;
-		MineFieldShape shape = new MineFieldShape(minefield);
-		shape.draw((Graphics2D)gc);
+		Color oldColor = gc.getColor();
+		MineField minefield = (MineField) model;
+		int dim = minefield.getDim();
+		
+		cells[dim - 1][dim - 1].setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		
+		int rockY = minefield.getRockY();
+		int rockX = minefield.getRockX();
+		cells[rockY][rockX].patch.isTraveled = true;
+		
+		for(int row = 0; row < dim; row++) {
+			for (int col = 0; col < dim; col++) {
+				if (cells[row][col].patch.isTraveled) {
+					cells[row][col].setBackground(Color.WHITE);
+				}
+				if (cells[row][col].patch.isMined) {
+					cells[row][col].setBackground(Color.RED);
+				}
+			}
+		}
+			
+		gc.setColor(oldColor);
 	}
-
-//	public void propertyChange(PropertyChangeEvent evt) {
-//
-//	}
 
 }
