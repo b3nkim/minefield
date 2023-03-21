@@ -16,40 +16,26 @@ public class MineFieldView extends View {
 	public MineFieldView(MineField m) {
 		super(m);
 		int dim = m.getDim();
+		Patch[][] patches = m.getPatches();
 		cells = new Cell[dim][dim];
 		setLayout(new GridLayout(dim, dim));
 		for(int row = 0; row < dim; row++) {
 			for (int col = 0; col < dim; col++) {
-
-				// create and injitialize cells here, use
-				cells[row][col].patch = m.getPatches()[row][col];
-				cells[row][col].setBorder(BorderFactory.createLineBorder(Color.black));
-
+				Cell cell = new Cell();
+				cell.patch = patches[row][col];
+				cell.setBorder(BorderFactory.createLineBorder(Color.black));
+				cell.setBackground(Color.GRAY);
+				cell.setText("?");
+				cell.setHorizontalAlignment(JLabel.CENTER);
+			    cell.setVerticalAlignment(JLabel.CENTER);
+			    cells[row][col] = cell;
+				this.add(cells[row][col]);
 			}
 		}
 	}
 
 	public void paintComponent(Graphics gc) {
 		super.paintComponent(gc);
-//		Color oldColor = gc.getColor();
-//		Stoplight light = (Stoplight)model;
-//		StoplightShape shape = new StoplightShape(light);
-//		shape.draw((Graphics2D) gc);
-//		gc.setColor(oldColor);
-		MineField minefield = (MineField)model;
-		int dim = cells.length;
-		for(int row = 0; row < dim; row++) {
-			for (int col = 0; col < dim; col++) {
-
-				// create and injitialize cells here, use
-//				cells[row][col].draw(gc);
-
-			}
-		}
 	}
-
-//	public void propertyChange(PropertyChangeEvent evt) {
-//
-//	}
 
 }

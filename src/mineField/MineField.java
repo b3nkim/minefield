@@ -2,17 +2,14 @@ package mineField;
 
 import mvc.*;
 
-import java.awt.Color;
 import java.util.Random;
 
 class Patch {
-	Color color;
 	boolean isMined;
 	boolean isTraveled;
 	int neighbors;
 
 	Patch() {
-		color = Color.GRAY; // Color.WHITE if traveled
 		isMined = false;
 		isTraveled = false;
 		neighbors = 0;
@@ -33,19 +30,26 @@ public class MineField extends Model {
 
 	public static int percentMined = 5;
 	private int dim;
-	protected int rockX, rockY; // location of the Rock
+	protected int rockY, rockX; // location of the Rock
 	private Patch[][] patches;
 
 	public MineField(int dim) {
 		this.dim = dim;
 		patches = new Patch[dim][dim];
+		for (int row = 0; row < dim; row++) {
+			for (int col = 0; col < dim; col++) {
+				patches[row][col] = new Patch();
+			}
+		}
+		
 		rockX = 0;
 		rockY = 0;
+		patches[rockY][rockX].isTraveled = true;
 
 		// generating the locations of the mines
 		Random rand = new Random();
-		int numMines = percentMined * dim * dim;
-		for (int i = 0; i < numMines; i++) {
+		double numMines = (percentMined * dim * dim) / 100.0;
+		for (int i = 0; i < (int) numMines; i++) {
 			int next1 = rand.nextInt(dim);
 			int next2 = rand.nextInt(dim);
 			System.out.printf("location of mine: %d, %d", next1, next2);
@@ -148,6 +152,7 @@ public class MineField extends Model {
 			default:
 				throw new Exception("Unrecognized heading");
 			}
+		patches[rockY][rockX].isTraveled = true;
 		changed(); // from Model, sets changed flag and fires changed event
 	}
 
@@ -161,11 +166,4 @@ public class MineField extends Model {
 		return patches;
 	}
 
-	public int getRockX() {
-		return rockX;
-	}
-
-	public int getRockY() {
-		return rockY;
-	}
 }

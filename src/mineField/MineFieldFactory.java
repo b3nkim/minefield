@@ -25,8 +25,8 @@ public class MineFieldFactory implements AppFactory {
 	@Override
 	public Command makeEditCommand(Model model, String type, Object source) {
 		Command command = null;
-		if (type == "Move") {
-			command = new MoveCommand(model);
+		if (type == "Move" && source instanceof Heading) {
+			command = new MoveCommand(model, (Heading) source);
 		}
 		return command;
 	}
