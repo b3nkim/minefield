@@ -22,6 +22,7 @@ public class MineFieldView extends View {
 			for (int col = 0; col < dim; col++) {
 
 				// create and injitialize cells here, use
+				cells[row][col].patch = m.getPatches()[row][col];
 				cells[row][col].setBorder(BorderFactory.createLineBorder(Color.black));
 
 			}
@@ -36,8 +37,15 @@ public class MineFieldView extends View {
 //		shape.draw((Graphics2D) gc);
 //		gc.setColor(oldColor);
 		MineField minefield = (MineField)model;
-		MineFieldShape shape = new MineFieldShape(minefield);
-		shape.draw((Graphics2D)gc);
+		int dim = cells.length;
+		for(int row = 0; row < dim; row++) {
+			for (int col = 0; col < dim; col++) {
+
+				// create and injitialize cells here, use
+//				cells[row][col].draw(gc);
+
+			}
+		}
 	}
 
 //	public void propertyChange(PropertyChangeEvent evt) {

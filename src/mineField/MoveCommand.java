@@ -8,7 +8,11 @@ public class MoveCommand extends Command {
 	
 	public MoveCommand(Model model) {
 		super(model);
-		// TODO Auto-generated constructor stub
+		this.heading = null;
+	}
+	
+	public void setHeading(Heading heading) {
+		this.heading = heading;
 	}
 
 	@Override
@@ -17,7 +21,7 @@ public class MoveCommand extends Command {
 			throw new Exception("Model must instantiate MineField");
 		}
 		MineField minefield = (MineField)model;
-		
+		minefield.updateLocation(heading);
 	}
 
 }
