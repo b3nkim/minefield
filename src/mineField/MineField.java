@@ -49,6 +49,7 @@ public class MineField extends Model {
 			System.out.printf("location of mine: %d, %d\n", next1, next2);
 			patches[next1][next2].isMined = true;
 		}
+		patches[0][0].isMined = false; // starting location
 	}
 
 	private void countNeighbors() {
@@ -153,6 +154,14 @@ public class MineField extends Model {
 
 	public Patch[][] getPatches() {
 		return patches;
+	}
+
+	public int getRockY() {
+		return rockY;
+	}
+
+	public int getRockX() {
+		return rockX;
 	}
 
 }

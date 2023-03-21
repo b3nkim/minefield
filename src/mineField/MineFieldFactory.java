@@ -30,28 +30,28 @@ public class MineFieldFactory implements AppFactory {
 		if (type == "Move" && source instanceof JButton) {
 			JButton button = (JButton) source;
 			switch (button.getText()) {
-				case "EAST":
+				case "E":
 					command = new MoveCommand(model, Heading.EAST);
 					break;
-				case "NORTH":
+				case "N":
 					command = new MoveCommand(model, Heading.NORTH);
 					break;
-				case "NORTHEAST":
+				case "NE":
 					command = new MoveCommand(model, Heading.NORTHEAST);
 					break;
-				case "NORTHWEST":
+				case "NW":
 					command = new MoveCommand(model, Heading.NORTHWEST);
 					break;
-				case "SOUTH":
+				case "S":
 					command = new MoveCommand(model, Heading.SOUTH);
 					break;
-				case "SOUTHEAST":
+				case "SE":
 					command = new MoveCommand(model, Heading.SOUTHEAST);
 					break;
-				case "SOUTHWEST":
+				case "SW":
 					command = new MoveCommand(model, Heading.SOUTHWEST);
 					break;
-				case "WEST":
+				case "W":
 					command = new MoveCommand(model, Heading.WEST);
 					break;
 				default:

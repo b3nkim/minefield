@@ -23,8 +23,8 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 	protected JPanel controlPanel; // not a separate class!
 	private SafeFrame frame;
 	private Container cp;
-	public static int FRAME_WIDTH = 500;
-	public static int FRAME_HEIGHT = 300;
+	public static int FRAME_WIDTH = 1000;
+	public static int FRAME_HEIGHT = 500;
 
 	public AppPanel(AppFactory factory) {
 		super();
@@ -34,7 +34,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 		view = factory.makeView(model);
 		controlPanel = new JPanel(); // TODO
 		
-		view.setBackground(Color.LIGHT_GRAY);
+		view.setBackground(Color.DARK_GRAY);
 		controlPanel.setBackground(Color.PINK);
 
 		frame = new SafeFrame();
