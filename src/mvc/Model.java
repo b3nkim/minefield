@@ -5,6 +5,9 @@ abstract public class Model extends Bean {
 	private boolean unsavedChanges = false;
 	private String fileName = null;
 	
+	// changed() for when we make a new model
+	// changed() for when we change a prpperty
+	
 	protected void changed() {
 		setUnsavedChanges(true);
 	}

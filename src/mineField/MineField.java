@@ -1,10 +1,10 @@
 package mineField;
 
-import java.util.Random;
+import java.io.Serializable;
 
 import mvc.*;
 
-class Patch {
+class Patch implements Serializable {
 	boolean isMined;
 	boolean isTraveled;
 	int neighbors;
@@ -21,6 +21,7 @@ public class MineField extends Model {
 	private int dim;
 	protected int rockY, rockX; // location of the Rock
 	private Patch[][] patches;
+	boolean gameOver;
 
 	public MineField(int dim) {
 		this.dim = dim;
@@ -37,15 +38,14 @@ public class MineField extends Model {
 
 		randomizeMines();
 		countNeighbors();
-
+		gameOver = false;
 	}
 	
 	private void randomizeMines() {
-		Random rand = new Random();
 		double numMines = (percentMined * dim * dim) / 100.0;
 		for (int i = 0; i < (int) numMines; i++) {
-			int next1 = rand.nextInt(dim);
-			int next2 = rand.nextInt(dim);
+			int next1 = Utilities.rng.nextInt(dim);
+			int next2 = Utilities.rng.nextInt(dim);
 			System.out.printf("location of mine: %d, %d\n", next1, next2);
 			patches[next1][next2].isMined = true;
 		}
@@ -145,6 +145,10 @@ public class MineField extends Model {
 			}
 		patches[rockY][rockX].isTraveled = true;
 		changed(); // from Model, sets changed flag and fires changed event
+		if (patches[rockY][rockX].isMined) {
+			gameOver = true;
+			throw new Exception("You stepped on a mine :(");
+		}
 	}
 	
 	// getters and setters

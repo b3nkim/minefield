@@ -70,7 +70,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 		this.model.initSupport(); // defined in Bean
 		this.model.addPropertyChangeListener(this);
 		view.setModel(this.model);
-		model.changed();
+		this.model.changed();
 	}
 
 
@@ -99,8 +99,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 			switch (actionCommand) {
 				case "New": {
 					if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
-						model = factory.makeModel();
-						view.setModel(model);
+						this.setModel(factory.makeModel());
 					}
 					break;
 				}

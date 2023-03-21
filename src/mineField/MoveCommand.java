@@ -17,6 +17,9 @@ public class MoveCommand extends Command {
 			throw new Exception("Model must instantiate MineField");
 		}
 		MineField minefield = (MineField)model;
+		if (minefield.gameOver) {
+			throw new Exception("You stepped on a mine :(");
+		}
 		minefield.updateLocation(heading);
 	}
 
