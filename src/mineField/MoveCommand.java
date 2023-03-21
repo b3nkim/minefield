@@ -10,6 +10,7 @@ public class MoveCommand extends Command {
 		super(model);
 		this.heading = heading;
 	}
+	
 	@Override
 	public void execute() throws Exception {
 		if (!(model instanceof MineField)) {

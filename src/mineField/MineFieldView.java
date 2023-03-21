@@ -25,7 +25,7 @@ public class MineFieldView extends View {
 				cell.patch = patches[row][col];
 				cell.setBorder(BorderFactory.createLineBorder(Color.black));
 				cell.setBackground(Color.GRAY);
-				cell.setText("?");
+				cell.setText("" + cell.patch.neighbors);
 				cell.setHorizontalAlignment(JLabel.CENTER);
 			    cell.setVerticalAlignment(JLabel.CENTER);
 			    cells[row][col] = cell;
@@ -34,13 +34,6 @@ public class MineFieldView extends View {
 		}
 	}
 
-	public void update() {
-		repaint();
-	}
-
-	public void ChangeCell() {
-		//change cell from a blank one to one that has been traversed over, decide which number to put in as well
-	}
 	public void paintComponent(Graphics gc) {
 		super.paintComponent(gc);
 	}
