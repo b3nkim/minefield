@@ -15,33 +15,28 @@ public class MineFieldView extends View {
 	private Cell cells[][];
 	public MineFieldView(MineField m) {
 		super(m);
-		int dim = m.getDim();
-		cells = new Cell[dim][dim];
-		setLayout(new GridLayout(dim, dim));
-		for(int row = 0; row < dim; row++) {
-			for (int col = 0; col < dim; col++) {
-
-				// create and injitialize cells here, use
+		cells = new Cell[m.getX()][m.getY()];
+		setLayout(new GridLayout(m.getX(), m.getY()));
+		for(int row = 0; row < m.getX(); row++) {
+			for (int col = 0; col < m.getY(); col++) {
+				cells[row][col] = new Cell();
 				cells[row][col].setBorder(BorderFactory.createLineBorder(Color.black));
 
 			}
 		}
 	}
 
+	public void update() {
+		repaint();
+	}
+
+	public void ChangeCell() {
+		//change cell from a blank one to one that has been traversed over, decide which number to put in as well
+	}
 	public void paintComponent(Graphics gc) {
 		super.paintComponent(gc);
-//		Color oldColor = gc.getColor();
-//		Stoplight light = (Stoplight)model;
-//		StoplightShape shape = new StoplightShape(light);
-//		shape.draw((Graphics2D) gc);
-//		gc.setColor(oldColor);
 		MineField minefield = (MineField)model;
 		MineFieldShape shape = new MineFieldShape(minefield);
 		shape.draw((Graphics2D)gc);
 	}
-
-//	public void propertyChange(PropertyChangeEvent evt) {
-//
-//	}
-
 }

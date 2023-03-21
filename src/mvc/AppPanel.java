@@ -45,8 +45,8 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 		frame.setTitle(factory.getTitle());
 		
 		this.setLayout((new GridLayout(1, 2)));
-		this.add(controlPanel);
-		this.add(view);
+		//this.add(controlPanel);
+		//this.add(view);
 
 		display();
 	}
