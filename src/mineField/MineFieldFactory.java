@@ -3,10 +3,12 @@ package mineField;
 import mvc.*;
 
 public class MineFieldFactory implements AppFactory {
+	
+	public static Integer DIM = 20;
 
 	@Override
 	public Model makeModel() {
-		return new MineField();
+		return new MineField(DIM);
 	}
 
 	@Override
@@ -23,8 +25,8 @@ public class MineFieldFactory implements AppFactory {
 	@Override
 	public Command makeEditCommand(Model model, String type, Object source) {
 		Command command = null;
-		if (type == "Move") {
-			command = new MoveCommand(model);
+		if (type == "Move" && source instanceof Heading) {
+			command = new MoveCommand(model, (Heading) source);
 		}
 		return command;
 	}
@@ -37,7 +39,7 @@ public class MineFieldFactory implements AppFactory {
 	@Override
 	public String[] getHelp() {
 		return new String[] {
-				"Move: 		Sargent Rock moves one cell in the given direction"
+				"Move: 		Rock moves one cell in the given direction"
 		};
 	}
 

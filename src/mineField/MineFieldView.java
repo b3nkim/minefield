@@ -15,13 +15,21 @@ public class MineFieldView extends View {
 	private Cell cells[][];
 	public MineFieldView(MineField m) {
 		super(m);
-		cells = new Cell[m.getX()][m.getY()];
-		setLayout(new GridLayout(m.getX(), m.getY()));
-		for(int row = 0; row < m.getX(); row++) {
-			for (int col = 0; col < m.getY(); col++) {
-				cells[row][col] = new Cell();
-				cells[row][col].setBorder(BorderFactory.createLineBorder(Color.black));
-
+		int dim = m.getDim();
+		Patch[][] patches = m.getPatches();
+		cells = new Cell[dim][dim];
+		setLayout(new GridLayout(dim, dim));
+		for(int row = 0; row < dim; row++) {
+			for (int col = 0; col < dim; col++) {
+				Cell cell = new Cell();
+				cell.patch = patches[row][col];
+				cell.setBorder(BorderFactory.createLineBorder(Color.black));
+				cell.setBackground(Color.GRAY);
+				cell.setText("?");
+				cell.setHorizontalAlignment(JLabel.CENTER);
+			    cell.setVerticalAlignment(JLabel.CENTER);
+			    cells[row][col] = cell;
+				this.add(cells[row][col]);
 			}
 		}
 	}
@@ -35,8 +43,6 @@ public class MineFieldView extends View {
 	}
 	public void paintComponent(Graphics gc) {
 		super.paintComponent(gc);
-		MineField minefield = (MineField)model;
-		MineFieldShape shape = new MineFieldShape(minefield);
-		shape.draw((Graphics2D)gc);
 	}
+
 }
