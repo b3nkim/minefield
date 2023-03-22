@@ -148,6 +148,9 @@ public class MineField extends Model {
 		if (patches[rockY][rockX].isMined) {
 			gameOver = true;
 			throw new Exception("You stepped on a mine :(");
+		} else if (rockY == dim - 1 && rockX == dim - 1) {
+			gameOver = true;
+			throw new Exception("You made it to the end :)");
 		}
 	}
 	

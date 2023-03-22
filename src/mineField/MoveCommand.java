@@ -18,7 +18,7 @@ public class MoveCommand extends Command {
 		}
 		MineField minefield = (MineField)model;
 		if (minefield.gameOver) {
-			throw new Exception("You stepped on a mine :(");
+			throw new Exception("Select New from the menu to play a new game");
 		}
 		minefield.updateLocation(heading);
 	}

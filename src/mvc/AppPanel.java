@@ -77,7 +77,7 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 	protected JMenuBar createMenuBar() {
 		JMenuBar result = new JMenuBar();
 		
-		String[] fileItems = {"New", "Save", "SaveAs", "Open", "Quit"};
+		String[] fileItems = {"New", "Save", "Open", "Quit"};
 		JMenu fileMenu = Utilities.makeMenu("File", fileItems, this);
 		result.add(fileMenu);
 
@@ -100,6 +100,13 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 				case "New": {
 					if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
 						this.setModel(factory.makeModel());
+						view = factory.makeView(this.model);
+						
+						this.removeAll();
+						this.add(controlPanel);
+						this.add(view);
+						
+						display();
 					}
 					break;
 				}
@@ -110,19 +117,19 @@ public class AppPanel extends JPanel implements ActionListener, PropertyChangeLi
 					os.close();
 					break;
 				}
-				case "SaveAs": {
-					String fName = Utilities.getFileName((String) null, true);
-					ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fName));
-					os.writeObject(this.model);
-					os.close();
-					break;
-				}
 				case "Open": {
 					if (Utilities.confirm("Are you sure? Unsaved changes will be lost!")) {
 						String fName = Utilities.getFileName((String) null, true);
 						ObjectInputStream is = new ObjectInputStream(new FileInputStream(fName));
-						this.model = (Model) is.readObject();
-						this.view.setModel(model);
+						Model readModel = (Model) is.readObject();
+						this.setModel(readModel);
+						view = factory.makeView(this.model);
+						
+						this.removeAll();
+						this.add(controlPanel);
+						this.add(view);
+						
+						display();
 						is.close();
 					}
 					break;
