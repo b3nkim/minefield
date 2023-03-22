@@ -1,8 +1,10 @@
 package mineField;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import mvc.*;
 
@@ -12,15 +14,14 @@ public class MineFieldPanel extends AppPanel {
 
 	public MineFieldPanel(AppFactory factory) {
 		super(factory);
-		
-//		MineField minefield = (MineField) model;
-//		minefield.addPropertyChangeListener(this);
-		controlPanel.setLayout(new GridLayout(4,2));
+		controlPanel.setLayout(new BorderLayout());
 		initButtons();
-
 	}
-	
-	private void initButtons() {		
+
+	private void initButtons() {
+		JPanel headings = new JPanel();
+		headings.setLayout(new GridLayout(3, 3));
+
 		NW = new JButton("NW");
 		N = new JButton("N");
 		NE = new JButton("NE");
@@ -28,7 +29,7 @@ public class MineFieldPanel extends AppPanel {
 		E = new JButton("E");
 		S = new JButton("S");
 		SE = new JButton("SE");
-		SW = new JButton("SW");	
+		SW = new JButton("SW");
 		
 		NW.setActionCommand("Move");
 		N.setActionCommand("Move");
@@ -38,7 +39,7 @@ public class MineFieldPanel extends AppPanel {
 		S.setActionCommand("Move");
 		SE.setActionCommand("Move");
 		SW.setActionCommand("Move");
-		
+
 		NW.addActionListener(this);
 		N.addActionListener(this);
 		NE.addActionListener(this);
@@ -48,14 +49,42 @@ public class MineFieldPanel extends AppPanel {
 		SE.addActionListener(this);
 		SW.addActionListener(this);
 		
-		controlPanel.add(NW);
-		controlPanel.add(N);
-		controlPanel.add(NE);
-		controlPanel.add(W);
-		controlPanel.add(E);
-		controlPanel.add(S);
-		controlPanel.add(SE);
-		controlPanel.add(SW);
+		JPanel p = new JPanel();
+		p.add(NW);
+		headings.add(p);
+		
+		p = new JPanel();
+		p.add(N);
+		headings.add(p);
+		
+		p = new JPanel();
+		p.add(NE);
+		headings.add(p);
+		
+		p = new JPanel();
+		p.add(W);
+		headings.add(p);
+		
+		p = new JPanel();
+		headings.add(p);
+		
+		p = new JPanel();
+		p.add(E);
+		headings.add(p);
+		
+		p = new JPanel();
+		p.add(SW);
+		headings.add(p);
+		
+		p = new JPanel();
+		p.add(S);
+		headings.add(p);
+		
+		p = new JPanel();
+		p.add(SE);
+		headings.add(p);
+
+		controlPanel.add(headings, "Center");
 	}
 
 	public static void main(String[] args) {

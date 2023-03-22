@@ -5,11 +5,11 @@ import java.io.Serializable;
 import mvc.*;
 
 class Patch implements Serializable {
-	boolean isMined;
-	boolean isTraveled;
-	int neighbors;
+	protected boolean isMined;
+	protected boolean isTraveled;
+	protected int neighbors;
 
-	Patch() {
+	public Patch() {
 		isMined = false;
 		isTraveled = false;
 		neighbors = 0;
@@ -49,7 +49,8 @@ public class MineField extends Model {
 			System.out.printf("location of mine: %d, %d\n", next1, next2);
 			patches[next1][next2].isMined = true;
 		}
-		patches[0][0].isMined = false; // starting location
+		// starting location should not be a mine
+		patches[0][0].isMined = false;
 	}
 
 	private void countNeighbors() {

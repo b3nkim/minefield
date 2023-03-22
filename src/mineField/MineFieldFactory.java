@@ -20,8 +20,7 @@ public class MineFieldFactory implements AppFactory {
 
 	@Override
 	public String[] getEditCommands() {
-		// TODO add other commands
-		return new String[]{"Move"};
+		return new String[]{};
 	}
 
 	@Override
@@ -69,7 +68,14 @@ public class MineFieldFactory implements AppFactory {
 	@Override
 	public String[] getHelp() {
 		return new String[] {
-				"Move: 		Rock moves one cell in the given direction"
+				"N:		move one space in the north direction",
+				"S:		move one space in the south direction",
+				"E:		move one space in the east direction",
+				"W:		move one space in the west direction",
+				"NE:		move one space in the northeast direction",
+				"NW:		move one space in the northwest direction",
+				"SE:		move one space in the southeast direction",
+				"SW:		move one space in the southwest direction"
 		};
 	}
 
